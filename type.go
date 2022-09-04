@@ -9,6 +9,7 @@ type sms_request_bool_exp map[string]interface{}
 
 // SendSmsInput represents send sms input payload
 type SendSmsInput struct {
+	ClientName string    `json:"client_name,omitempty" graphql:"client_name"`
 	TemplateID string    `json:"template_id,omitempty" graphql:"template_id"`
 	Content    string    `json:"content,omitempty" graphql:"content"`
 	Recipient  []string  `json:"recipient,omitempty" graphql:"recipient"`
