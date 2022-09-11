@@ -4,18 +4,33 @@ import (
 	"time"
 )
 
+type MessageType int
+
+const (
+	MessageNormal MessageType = 0
+	MessageOTP    MessageType = 1
+
+	ErrCodeUnsupported
+)
+
 type json map[string]string
 type sms_request_bool_exp map[string]interface{}
 
 // SendSmsInput represents send sms input payload
 type SendSmsInput struct {
-	ClientName string      `json:"client_name,omitempty" graphql:"client_name"`
-	TemplateID string      `json:"template_id,omitempty" graphql:"template_id"`
-	Content    string      `json:"content,omitempty" graphql:"content"`
-	Recipient  []Recipient `json:"recipient" graphql:"recipient"`
-	SendAfter  time.Time   `json:"send_after,omitempty" graphql:"send_after"`
-	Save       bool        `json:"save"`
-	Locale     string      `json:"locale"`
+	ClientName string       `json:"client_name,omitempty" graphql:"client_name"`
+	TemplateID string       `json:"template_id,omitempty" graphql:"template_id"`
+	Content    string       `json:"content,omitempty" graphql:"content"`
+	Recipient  []Recipient  `json:"recipient" graphql:"recipient"`
+	SendAfter  time.Time    `json:"send_after,omitempty" graphql:"send_after"`
+	Metadata   *SmsMetadata `json:"metadata,omitempty" graphql:"metadata" scalar:"true"`
+	Save       bool         `json:"save"`
+	Locale     string       `json:"locale"`
+}
+
+type SmsMetadata struct {
+	BrandName   string      `json:"brand_name,omitempty"`
+	MessageType MessageType `json:"message_type,omitempty"`
 }
 
 // Recipient represents the international phone number
