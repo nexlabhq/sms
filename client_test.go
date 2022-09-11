@@ -56,9 +56,13 @@ func TestSendSMSs(t *testing.T) {
 	contents := "Test contents"
 	results, err := client.Send([]SendSmsInput{
 		{
-			Content:   contents,
-			Recipient: []string{"0123456789"},
-			Save:      true,
+			Content: contents,
+			Recipient: []Recipient{
+				{
+					PhoneNumber: "0123456789",
+				},
+			},
+			Save: true,
 		},
 	}, nil)
 	assert.NoError(t, err)
