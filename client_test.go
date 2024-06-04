@@ -54,6 +54,7 @@ func TestSendSMSs(t *testing.T) {
 	defer cleanup(t, client)
 
 	contents := "Test contents"
+	unicode := true
 	results, err := client.Send([]SendSmsInput{
 		{
 			Content: contents,
@@ -61,6 +62,9 @@ func TestSendSMSs(t *testing.T) {
 				{
 					PhoneNumber: "0123456789",
 				},
+			},
+			Metadata: &SmsMetadata{
+				Unicode: &unicode,
 			},
 			Save: true,
 		},
