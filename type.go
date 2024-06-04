@@ -28,9 +28,11 @@ type SendSmsInput struct {
 	Locale     string       `json:"locale"`
 }
 
+// SmsMetadata represents a sms metadata payload
 type SmsMetadata struct {
 	BrandName   string      `json:"brand_name,omitempty"`
 	MessageType MessageType `json:"message_type,omitempty"`
+	Unicode     *bool       `json:"unicode,omitempty"`
 }
 
 // Recipient represents the international phone number
