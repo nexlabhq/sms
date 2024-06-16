@@ -8,13 +8,14 @@ import (
 	"time"
 
 	"github.com/hasura/go-graphql-client"
-	"github.com/stretchr/testify/assert"
 )
 
 func cleanup(t *testing.T, client *Client) {
 
 	_, err := client.CancelSms(map[string]interface{}{})
-	assert.NoError(t, err)
+	if err != nil {
+		t.Fatal(err)
+	}
 }
 
 // hasuraTransport transport for Hasura GraphQL Client
@@ -69,7 +70,9 @@ func TestSendSMSs(t *testing.T) {
 			Save: true,
 		},
 	}, nil)
-	assert.NoError(t, err)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	var getQuery struct {
 		SmsRequests []struct {
@@ -85,6 +88,10 @@ func TestSendSMSs(t *testing.T) {
 		},
 	}
 	err = client.client.Query(context.TODO(), &getQuery, getVariables)
-	assert.NoError(t, err)
-	assert.Equal(t, 1, len(getQuery.SmsRequests))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(getQuery.SmsRequests) != 1 {
+		t.Fatalf("expected 1 request, got: %d", len(getQuery.SmsRequests))
+	}
 }
